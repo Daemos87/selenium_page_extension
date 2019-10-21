@@ -7,7 +7,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 
 @dataclass
-class AutoWebElement(WebElement):
+class AutoWebElement:
     by: By
     locator: str
     as_list: bool = False

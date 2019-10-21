@@ -7,6 +7,7 @@ from selenium.webdriver.common.by import By
 
 from gian_selenium.decorators.decorators import page
 from gian_selenium.decorators.types import locator
+from gian_selenium.internals.AutoWebElement import AutoWebElement
 
 
 @pytest.fixture
@@ -68,4 +69,9 @@ class TestPage:
         fake_page = self.FakePage(self.driver)
         # noinspection PyUnresolvedReferences
         fake_page.element.click()
+        # noinspection PyUnresolvedReferences
         assert fake_page.element.get_attribute('textContent') == 'premuto'
+
+    def test_autowebelement(self):
+        assert isinstance(self.FakePage.element, AutoWebElement)
+        print(self.FakePage.element)
