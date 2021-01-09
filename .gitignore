@@ -1,3 +1,6 @@
 
 /report/
 /selenium_page_extension/tests/chromedriver.exe
+*.html
+/selenium_page_extension/tests/report/
+.idea
