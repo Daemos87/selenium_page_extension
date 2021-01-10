@@ -1,6 +1,8 @@
-
-/report/
 /selenium_page_extension/tests/chromedriver.exe
 *.html
 /selenium_page_extension/tests/report/
 .idea
+/selenium_page_extension/tests/reports/
+/selenium_page_extension/tests/debug.log
+/selenium_page_extension/tests/geckodriver.exe
+/selenium_page_extension/tests/geckodriver.log

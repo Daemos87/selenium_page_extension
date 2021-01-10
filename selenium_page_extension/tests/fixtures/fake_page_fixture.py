@@ -13,7 +13,7 @@ def fake_html() :
                <head>
                </head>
                <body>
-                   <button id='buttone' onclick='document.getElementById("buttone").textContent="premuto";'> 
+                   <button id='button1' onclick='document.getElementById("button1").textContent="premuto";'> 
                     click me
                    </button>
                    
