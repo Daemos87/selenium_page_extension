@@ -4,15 +4,16 @@ import pytest
 from assertpy import assert_that
 from selenium.webdriver.common.by import By
 
-from selenium_page_extension.bases.WebElementWrapper import WebElementWrapper
-from selenium_page_extension.bases.WebPage import WebPage
-# noinspection PyUnresolvedReferences
-from selenium_page_extension.tests.fixtures.fake_page_fixture import fake_html
+from selenium_page_extension.classes.WebElementWrapper import WebElementWrapper
+from selenium_page_extension.decorators.decorators import webpage
 # noinspection PyUnresolvedReferences
 from selenium_page_extension.tests.fixtures.selenium_fixture import selenium_driver
+# noinspection PyUnresolvedReferences
+from selenium_page_extension.tests.fixtures.fake_page_fixture import fake_html
 
 
-class FakePage(WebPage) :
+@webpage
+class FakePage() :
     """
         demo test webpage
     """
@@ -20,9 +21,12 @@ class FakePage(WebPage) :
     elements: Tuple[WebElementWrapper] = (By.ID, "e")
     frame: WebElementWrapper = (By.ID, "frame")
 
+    def click(self):
+        self.element.click()
 
 
-class FakeFrame(WebPage) :
+@webpage
+class FakeFrame() :
     element: WebElementWrapper = (By.ID, "button1")
 
 
@@ -39,7 +43,7 @@ class TestPage :
         """
         selenium_driver.get(fake_html)
         fake_page = FakePage(selenium_driver)
-        fake_page.element.click()
+        fake_page.click()
         assert_that(fake_page.element.get_attribute('textContent'), "Check testo bottone fake page").is_equal_to(
             "premuto")
 
@@ -76,3 +80,6 @@ class TestPage :
             assert_that(frame.element.get_attribute('textContent'), "Check testo bottone fake page").is_equal_to(
                 "premuto")
         fake_page.element.click()
+
+    def test_8(self):
+        assert 8, 'problems'

@@ -1,15 +1,12 @@
-import configparser
-import logging
 from abc import ABC
-from typing import Tuple
+from typing import Tuple, Type
 
 from selenium.webdriver.remote.webdriver import WebDriver
-from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.wait import WebDriverWait
 
-from selenium_page_extension.bases import wait_presence
-from selenium_page_extension.bases.WebElementWrapper import WebElementWrapper
+from selenium_page_extension.classes import wait_presence
+from selenium_page_extension.classes.WebElementWrapper import WebElementWrapper
 
 
 class WebPage(ABC) :
@@ -19,8 +16,11 @@ class WebPage(ABC) :
         self._wait_presence: WebDriverWait = WebDriverWait(driver, wait_presence)
 
     def __getattribute__(self, item: str) :
-        class_ref = super().__getattribute__('__class__')
-        typ = class_ref.__annotations__.get(item, None)
+        class_ref:Type[Type] = super().__getattribute__('__class__')
+        try:
+            typ = class_ref.__annotations__.get(item, None)
+        except AttributeError:
+            raise RuntimeError(f"Cannot find any type annotation on class {type(self).__name__}, look like an error, check the doc at [placeholder]")
         locator = class_ref.__dict__.get(item, None)
         message = f'cannot find element(s) identified by {locator} after {wait_presence} seconds timeout'
 

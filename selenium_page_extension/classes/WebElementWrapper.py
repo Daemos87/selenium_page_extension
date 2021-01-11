@@ -1,10 +1,10 @@
-from typing import Type, Optional
+from typing import Optional
 from selenium.common.exceptions import ElementClickInterceptedException
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support.wait import WebDriverWait
 
-from selenium_page_extension.bases import wait_interaction, logger
+from selenium_page_extension.classes import wait_interaction, logger
 
 
 class WebElementWrapper :
