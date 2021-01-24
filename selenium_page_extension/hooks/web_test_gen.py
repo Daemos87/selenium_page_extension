@@ -2,8 +2,6 @@ import logging
 
 from _pytest.python import Metafunc
 # noinspection PyUnresolvedReferences
-from selenium_page_extension.tests.fake_page_fixture import fake_html
-# noinspection PyUnresolvedReferences
 from ..fixtures.selenium_fixture import selenium_driver
 
 logger = logging.getLogger(__name__)
