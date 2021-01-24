@@ -4,7 +4,7 @@ import pytest
 
 
 @pytest.fixture
-def fake_html() :
+def fake_html():
     frame_path = os.path.abspath("./frame.html")
     page_path = os.path.abspath("./page.html")
 
@@ -37,7 +37,7 @@ def fake_html() :
            </html>
            """
 
-    with open(f"{page_path}", "w") as pag, open(f"{frame_path}", "w") as frame :
+    with open(f"{page_path}", "w") as pag, open(f"{frame_path}", "w") as frame:
         pag.write(fake_page)
         frame.write(fake_frame)
     yield page_path

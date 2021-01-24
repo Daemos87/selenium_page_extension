@@ -5,15 +5,15 @@ from selenium.webdriver.firefox.options import Options as FirefoxOptions
 
 
 @pytest.fixture()
-def selenium_driver(request) :
+def selenium_driver(request):
     args = request.param[1]
-    if request.param[0] == 'chrome' :
+    if request.param[0] == 'chrome':
         opt = ChromeOptions()
         driver = Chrome
-    else :
+    else:
         opt = FirefoxOptions()
         driver = Firefox
-    for o in args :
+    for o in args:
         opt.add_argument(o)
     driver = driver(options=opt)
     yield driver

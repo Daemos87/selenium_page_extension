@@ -1,9 +1,15 @@
 from distutils.core import setup
 
-setup(
+import setuptools
+
+with open("README.md", "r", encoding="utf-8") as fh :
+    long_description = fh.read()
+
+
+setuptools.setup(
     name='selenium_page_extension',
-    packages=['selenium_page_extension'],
-    version='v0.1',
+    packages=setuptools.find_packages(),
+    version='v0.2',
     license='GNU GPLv3',
     description='Selenium simple POM extension',
     author='Antonio Giangrande',
@@ -19,7 +25,7 @@ setup(
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
         'Topic :: Software Development :: Build Tools',
-        'License :: OSI Approved :: GNU GPLv3',  # Again, pick a license
+        'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
         'Programming Language :: Python :: 3.9',
     ],
 
