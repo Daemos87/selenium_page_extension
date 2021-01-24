@@ -7,9 +7,9 @@ from selenium.webdriver.common.by import By
 from selenium_page_extension.classes.WebElementWrapper import WebElementWrapper
 from selenium_page_extension.decorators.decorators import webpage
 # noinspection PyUnresolvedReferences
-from selenium_page_extension.tests.fixtures.selenium_fixture import selenium_driver
-# noinspection PyUnresolvedReferences
 from selenium_page_extension.tests.fixtures.fake_page_fixture import fake_html
+# noinspection PyUnresolvedReferences
+from selenium_page_extension.tests.fixtures.selenium_fixture import selenium_driver
 
 
 @webpage
@@ -21,7 +21,7 @@ class FakePage() :
     elements: Tuple[WebElementWrapper] = (By.ID, "e")
     frame: WebElementWrapper = (By.ID, "frame")
 
-    def click(self):
+    def click(self) :
         self.element.click()
 
 
@@ -30,9 +30,31 @@ class FakeFrame() :
     element: WebElementWrapper = (By.ID, "button1")
 
 
-@pytest.mark.chrome
-@pytest.mark.firefox
+@webpage
+class GoogleQuery() :
+    searchBox: WebElementWrapper = (By.NAME, "q")
+    acceptBtn: WebElementWrapper = (By.XPATH, "//form[@class='A28uDc']")
+    cookieFrame: WebElementWrapper = (By.TAG_NAME, "iframe")
+    resultQuery = (By.XPATH, "//span[contains(text(),{text})]")
+
+
+@pytest.mark.chrome("--start-maximized")
 class TestPage :
+
+    def test_no(self):
+        import selenium_page_extension.classes.WebPage
+
+    @pytest.mark.parametrize('search_value', ['pannocchia', 'abruzzo'])
+    @pytest.mark.firefox
+    def test_google(self, search_value: str, selenium_driver) :
+        selenium_driver.get("https://www.google.it")
+        google = GoogleQuery(selenium_driver)
+        with google.cookieFrame :
+            google.acceptBtn.submit()
+        google.searchBox.send_keys(search_value)
+        selenium_driver.find_elements(google.resultQuery[0], google.resultQuery[1].format(text=search_value))
+        google.searchBox.submit()
+        assert_that(len(google.resultQuery)).is_greater_than(0)
 
     def test_page_click(self, fake_html, selenium_driver) :
         """
@@ -81,5 +103,5 @@ class TestPage :
                 "premuto")
         fake_page.element.click()
 
-    def test_8(self):
+    def test_8(self) :
         assert 8, 'problems'

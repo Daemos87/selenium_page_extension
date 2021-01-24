@@ -8,18 +8,25 @@ from selenium_page_extension.classes import wait_interaction, logger
 
 
 class WebElementWrapper :
+
     def __init__(self, driver: WebDriver, element: WebElement) :
         self.driver = driver
         self.element = element
         self._wait_interaction: WebDriverWait = WebDriverWait(driver, wait_interaction)
+        self.is_clickable  = lambda _ : \
+            self.element if self.element.is_displayed() and self.element.is_enabled() else None
 
     def __getattr__(self, item) :
         return getattr(self.element, item)
 
+    def send_keys(self, value: str) :
+
+        self._wait_interaction.until(self.is_clickable).clear()
+        self.element.send_keys(value)
+
     def click(self, retry_on_intercepted=False) :
         try :
-            self._wait_interaction.until(
-                lambda _ : self.element if self.element.is_displayed() and self.element.is_enabled() else None).click()
+            self._wait_interaction.until(self.is_clickable).click()
         except ElementClickInterceptedException as e :
             if retry_on_intercepted :
                 logger.warning(e.msg)
@@ -28,7 +35,7 @@ class WebElementWrapper :
                 logger.error(e.msg)
                 raise
 
-    def switch_to(self, page = None) -> Optional :
+    def switch_to(self, page=None) -> Optional :
         if self.element.tag_name == 'iframe' :
             self.driver.switch_to.frame(self.element)
         else :
@@ -39,8 +46,8 @@ class WebElementWrapper :
     def reset_context(self) :
         self.driver.switch_to.default_content()
 
-    def __enter__(self):
+    def __enter__(self) :
         self.switch_to()
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
+    def __exit__(self, exc_type, exc_val, exc_tb) :
         self.reset_context()

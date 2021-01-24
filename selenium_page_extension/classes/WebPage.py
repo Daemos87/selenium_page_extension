@@ -4,6 +4,7 @@ from typing import Tuple, Type
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.wait import WebDriverWait
+from typing import Any
 
 from selenium_page_extension.classes import wait_presence
 from selenium_page_extension.classes.WebElementWrapper import WebElementWrapper
@@ -15,7 +16,8 @@ class WebPage(ABC) :
         self._driver: WebDriver = driver
         self._wait_presence: WebDriverWait = WebDriverWait(driver, wait_presence)
 
-    def __getattribute__(self, item: str) :
+
+    def __getattribute__(self, item: str) -> Any:
         class_ref:Type[Type] = super().__getattribute__('__class__')
         try:
             typ = class_ref.__annotations__.get(item, None)

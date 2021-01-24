@@ -2,16 +2,18 @@ from datetime import datetime
 
 import pytest
 from _pytest.python import Metafunc
+import logging
 
+logger = logging.getLogger(__name__)
 
 def pytest_generate_tests(metafunc: Metafunc) :
-    if not 'selenium_driver' in metafunc.fixturenames:
+    if 'selenium_driver' not in metafunc.fixturenames :
         return
     browsers = []
-    if metafunc.definition.get_closest_marker("chrome") :
-        browsers.append("chrome")
+    if mark:=metafunc.definition.get_closest_marker("chrome") :
+        browsers.append(("chrome",mark.args))
     if metafunc.definition.get_closest_marker("firefox") :
-        browsers.append("firefox")
+        browsers.append(("firefox",mark.args))
     metafunc.parametrize('selenium_driver', browsers, indirect=True)
 
 
@@ -24,7 +26,7 @@ def pytest_runtest_makereport(item, call) :
     report = outcome.get_result()
     extra = getattr(report, 'extra', [])
     if report.when == 'call' :
-        if not   'selenium_driver' in item.fixturenames:
+        if 'selenium_driver' not in item.fixturenames :
             return
 
         feature_request = item.funcargs['request']
