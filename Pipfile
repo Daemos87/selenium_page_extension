@@ -4,11 +4,12 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-pytest = "*"
 pytest-html = "*"
 assertpy = "*"
+twine = "*"
 
 [packages]
+pytest = "*"
 selenium = "*"
 
 [requires]

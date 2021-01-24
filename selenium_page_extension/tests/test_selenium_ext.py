@@ -7,9 +7,9 @@ from selenium.webdriver.common.by import By
 from selenium_page_extension.classes.WebElementWrapper import WebElementWrapper
 from selenium_page_extension.decorators.decorators import webpage
 # noinspection PyUnresolvedReferences
-from selenium_page_extension.tests.fixtures.fake_page_fixture import fake_html
+from selenium_page_extension.fixtures.fake_page_fixture import fake_html
 # noinspection PyUnresolvedReferences
-from selenium_page_extension.tests.fixtures.selenium_fixture import selenium_driver
+from selenium_page_extension.fixtures.selenium_fixture import selenium_driver
 
 
 @webpage
@@ -42,7 +42,7 @@ class GoogleQuery() :
 class TestPage :
 
     def test_no(self):
-        import selenium_page_extension.classes.WebPage
+        pass
 
     @pytest.mark.parametrize('search_value', ['pannocchia', 'abruzzo'])
     @pytest.mark.firefox
