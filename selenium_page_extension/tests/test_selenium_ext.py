@@ -9,6 +9,7 @@ from selenium_page_extension import WebElementWrapper
 from selenium_page_extension.decorators import webpage
 from selenium.webdriver import Firefox
 
+
 @webpage
 class FakePage:
     """
@@ -92,8 +93,8 @@ class TestPage:
         fake_page = FakePage(selenium_driver)
         frame = FakeFrame(selenium_driver)
         with fake_page.frame:
-            if isinstance(selenium_driver,Firefox):
-                assert_that(lambda : frame.element).raises(TimeoutException).when_called_with()
+            if isinstance(selenium_driver, Firefox):
+                assert_that(lambda: frame.element).raises(TimeoutException).when_called_with()
             else:
                 frame.element.click()
                 assert_that(frame.element.get_attribute('textContent'), "Check testo bottone fake page").is_equal_to(
